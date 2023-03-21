@@ -1,0 +1,98 @@
+{
+    "drive": 
+    {
+        "forward": 
+        {
+            "linear.x": 0.1,
+            "linear.y": 0,
+            "linear.z": 0,
+            "angular.x": 0,
+            "angular.y": 0,
+            "angular.z": 0
+        },
+        "straight":
+        {
+            "linear.x": 0.1,
+            "linear.y": 0,
+            "linear.z": 0,
+            "angular.x": 0,
+            "angular.y": 0,
+            "angular.z": 0
+        }, 
+        "back":
+        {
+            "linear.x": -0.1,
+            "linear.y": 0,
+            "linear.z": 0,
+            "angular.x": 0,
+            "angular.y": 0,
+            "angular.z": 0
+        }, 
+        "topic": "/cmd_vel",
+        "message_type": "Twist"
+
+    },  
+    "go": 
+    {
+        "forward": 
+        {
+            "linear.x": 0.1,
+            "linear.y": 0,
+            "linear.z": 0,
+            "angular.x": 0,
+            "angular.y": 0,
+            "angular.z": 0
+    },
+        "straight":
+        {
+            "linear.x": 0.1,
+            "linear.y": 0,
+            "linear.z": 0,
+            "angular.x": 0,
+            "angular.y": 0,
+            "angular.z": 0
+    }, 
+        "back":
+        {
+            "linear.x": -0.1,
+            "linear.y": 0,
+            "linear.z": 0,
+            "angular.x": 0,
+            "angular.y": 0,
+            "angular.z": 0
+        }, 
+        "topic": "/cmd_vel", 
+        "message_type": "Twist"
+    }, 
+    "turn":
+    {
+        "left":
+        {
+            "linear.x": 0,
+            "linear.y": 0,
+            "linear.z": 0,
+            "angular.x": 0,
+            "angular.y": 0,
+            "angular.z": -0.1
+        },
+        "right":
+        {
+            "linear.x": 0,
+            "linear.y": 0,
+            "linear.z": 0,
+            "angular.x": 0,
+            "angular.y": 0,
+            "angular.z": 0.1
+        }, 
+        "topic": "/cmd_vel", 
+        "message_type": "Twist"
+    }, 
+    "stop": "stop", 
+    "exit program": "exit program"
+
+}
+
+
+
+  
+  
