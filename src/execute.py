@@ -19,7 +19,7 @@ class Execute():
         self.commands = []
         self.prev_command = ""
 
-        with open('/home/nika/catkin_ws/src/whisper_4/commands.json') as file:
+        with open('/home/ubuntu/catkin_ws/src/whisper_4/commands.json') as file:
             self.parsed_json = json.load(file)
     
     def process_command(self, text):
