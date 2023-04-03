@@ -1,6 +1,8 @@
 import speech_recognition as sr 
 from ctypes import *
+import sys
 
+device_index = int(sys.argv[1])
 
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
 def py_error_handler(filename, line, function, err, fmt):
@@ -15,7 +17,7 @@ for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
 
 r = sr.Recognizer()
 
-with sr.Microphone(device_index=10) as source:  
+with sr.Microphone(device_index=device_index) as source:  
     print("Please wait. Calibrating microphone...")  
     # listen for 5 seconds and create the ambient noise energy level  
     r.adjust_for_ambient_noise(source, duration=5)  

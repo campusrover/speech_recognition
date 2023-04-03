@@ -9,7 +9,7 @@ from std_msgs.msg import String
 import sys
 import signal
 from ctypes import *
-import pyaudio
+
 
 
 class Listen():
@@ -72,5 +72,7 @@ listener = Listen()
 listener.calibrate_mic()
 
 while not rospy.is_shutdown():
+    for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
+        print(i,": ",microphone_name)
     listener.listen()
     signal.signal(signal.SIGINT, shutdown)
