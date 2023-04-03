@@ -13,13 +13,15 @@ import pysine
 class Execute():
 
     def __init__(self):
+        self.package_directory = os.path.dirname(os.path.abspath(__file__))
+        print(self.package_directory)
         self.node_name = "[EXECUTE]"
         self.cmd_vel = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
         self.command_sub = rospy.Subscriber("/whisper/command", String, self.command_cb)
         self.commands = []
         self.prev_command = ""
 
-        with open('$(rospack find whisper_4)/commands.json') as file:
+        with open(f'{self.package_directory}/commands.json') as file:
             self.parsed_json = json.load(file)
     
     def process_command(self, text):
