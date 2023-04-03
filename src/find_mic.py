@@ -1,8 +1,8 @@
 import speech_recognition as sr 
 
 
-for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
-    print(i,": ",microphone_name)
+# for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
+#     print(i,": ",microphone_name)
 
 r = sr.Recognizer()
 
