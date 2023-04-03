@@ -16,7 +16,7 @@ for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
 
 r = sr.Recognizer()
 
-with sr.Microphone(device_index=16) as source:  
+with sr.Microphone(device_index=10) as source:  
     print("Please wait. Calibrating microphone...")  
     # listen for 5 seconds and create the ambient noise energy level  
     r.adjust_for_ambient_noise(source, duration=5)  
