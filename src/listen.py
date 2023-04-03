@@ -20,7 +20,8 @@ class Listen():
         self.r = sr.Recognizer()
         self.r.dynamic_energy_threshold = False
         self.r.energy_threshold = 400
-        self.device_index = 9
+        self.device_index = rospy.get_param("~device_index", 0)
+        print("device index: ", self.device_index)
         self.command_pub = rospy.Publisher("/whisper/command", String, queue_size=1)
         
     def calibrate_mic(self):
@@ -66,7 +67,7 @@ def shutdown(sig):
     sys.exit(0)
 
 
-rospy.init_node("listener")
+rospy.init_node("listener", anonymous=True)
 listener = Listen()
 listener.calibrate_mic()
 
