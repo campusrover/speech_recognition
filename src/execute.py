@@ -10,6 +10,7 @@ import os
 import rostopic
 import pysine
 from ctypes import *
+import playsound
 
 class Execute():
 
@@ -90,7 +91,8 @@ class Execute():
         speech.save("speak.mp3")
         
         # Playing the converted file
-        os.system("mpg123 -q speak.mp3")
+        playsound.playsound("speak.mp3")
+        # os.system("mpg123 -q speak.mp3")
 
 rospy.init_node("execute")
 
