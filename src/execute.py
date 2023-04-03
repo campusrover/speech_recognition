@@ -31,15 +31,17 @@ class Execute():
         command = self.process_command(text)
 
         if command[0] == "stop":
-            self.cmd_vel.publish(twist)
+            # self.cmd_vel.publish(twist)
             self.play_tone(freq=440, duration=0.2)
             self.play_tone(freq=300, duration=0.2)
+            return twist
             # self.speak("Stopping now.")
         elif command[0] == "exit" or command[0] == "shutdown":
-            self.cmd_vel.publish(twist)
+            # self.cmd_vel.publish(twist)
             self.play_tone(freq=300, duration=0.2)
             self.play_tone(freq=440, duration=0.2)
             self.play_tone(freq=200, duration=0.3) 
+            return twist
             # self.speak("Exiting program now.")
             return -1
         elif command[0] in self.parsed_json:
@@ -51,9 +53,10 @@ class Execute():
                 twist.angular.y = self.parsed_json[command[0]][command[1]]["angular.y"]
                 twist.angular.z = self.parsed_json[command[0]][command[1]]["angular.z"]
 
-                self.cmd_vel.publish(twist)
+                # self.cmd_vel.publish(twist)
                 
                 self.play_tone(440)
+                return twist
                 # self.speak(f"Executing command {command}")
             else: 
                 # self.speak(f"I don't know the command {command}.")
@@ -66,9 +69,9 @@ class Execute():
 
     def command_cb(self, msg):
         self.commands.append(msg.data)
-        current_command = self.commands.pop()
-        if self.prev_command != current_command:
-            self.execute_command(current_command)
+        # current_command = self.commands.pop()
+        # if self.prev_command != current_command:
+        #     self.execute_command(current_command)
 
     def play_tone(self, freq, duration=1.0):
         pysine.sine(frequency=freq, duration=duration)  
@@ -85,4 +88,14 @@ class Execute():
 
 rospy.init_node("execute")
 executer = Execute()
-rospy.spin()
+twist = Twist()
+
+rate = rospy.Rate(10)
+
+while not rospy.is_shutdown():
+    if executer.commands:
+        twist = executer.execute_command(executer.commands.pop())
+    executer.cmd_vel.publish(twist)
+
+    rate.sleep()
+# rospy.spin()
