@@ -8,6 +8,9 @@ from gtts import gTTS
 from std_msgs.msg import String
 import sys
 import signal
+from ctypes import *
+import pyaudio
+
 
 class Listen():
 
@@ -17,7 +20,7 @@ class Listen():
         self.r = sr.Recognizer()
         self.r.dynamic_energy_threshold = False
         self.r.energy_threshold = 400
-        self.device_index = 10
+        self.device_index = 9
         self.command_pub = rospy.Publisher("/whisper/command", String, queue_size=1)
         
     def calibrate_mic(self):
@@ -49,6 +52,14 @@ class Listen():
             rospy.loginfo(f"{self.node_name} could not understand...")
         except sr.RequestError as e:  
             print(f"{self.node_name} whisper error; {0}".format(e)) 
+
+ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
+def py_error_handler(filename, line, function, err, fmt):
+    # print('messages are yummy')
+    pass
+c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
+asound = cdll.LoadLibrary('libasound.so')
+asound.snd_lib_error_set_handler(c_error_handler)
 
 def shutdown(sig):
     rospy.loginfo("[LISTEN] Exiting program...")
