@@ -20,7 +20,7 @@ class Listen():
         self.r = sr.Recognizer()
         self.r.dynamic_energy_threshold = False
         self.r.energy_threshold = 400
-        self.device_index = rospy.get_param("~device_index", 0)
+        self.device_index = rospy.get_param("~device_index", 1)
         print("device index: ", self.device_index)
         self.command_pub = rospy.Publisher("/whisper/command", String, queue_size=1)
         
@@ -38,7 +38,7 @@ class Listen():
 
         with sr.Microphone(device_index=self.device_index) as source:
             rospy.loginfo(f"{self.node_name} listening...")
-            audio = self.r.listen(source)
+            audio = self.r.listen(source, timeout=5, phrase_time_limit=5)
 
         try:
             result = self.r.recognize_google(audio)

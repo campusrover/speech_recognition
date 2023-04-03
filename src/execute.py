@@ -89,8 +89,6 @@ class Execute():
         # Playing the converted file
         os.system("mpg123 -q speak.mp3")
 
-        
-
 rospy.init_node("execute")
 
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
