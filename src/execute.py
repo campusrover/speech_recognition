@@ -33,20 +33,21 @@ class Execute():
         twist = Twist()
         command = self.process_command(text)
 
+        if len(command) > 2:
+            self.speak(f"I don't know the command {command}.")
+            return twist
+
         if command[0] == "stop":
             # self.cmd_vel.publish(twist)
-            self.play_tone(freq=440, duration=0.2)
-            self.play_tone(freq=300, duration=0.2)
-            return twist
-            # self.speak("Stopping now.")
+            # self.play_tone(freq=440, duration=0.2)
+            # self.play_tone(freq=300, duration=0.2)
+            self.speak("Stopping now.")            
         elif command[0] == "exit" or command[0] == "shutdown":
             # self.cmd_vel.publish(twist)
-            self.play_tone(freq=300, duration=0.2)
-            self.play_tone(freq=440, duration=0.2)
-            self.play_tone(freq=200, duration=0.3) 
-            return twist
-            # self.speak("Exiting program now.")
-            return -1
+            # self.play_tone(freq=300, duration=0.2)
+            # self.play_tone(freq=440, duration=0.2)
+            # self.play_tone(freq=200, duration=0.3) 
+            self.speak("Exiting program now.")
         elif command[0] in self.parsed_json:
             if command[1] in self.parsed_json[command[0]]:
                 twist.linear.x = self.parsed_json[command[0]][command[1]]["linear.x"]
@@ -58,17 +59,19 @@ class Execute():
 
                 # self.cmd_vel.publish(twist)
                 
-                self.play_tone(440)
-                return twist
-                # self.speak(f"Executing command {command}")
+                # self.play_tone(440)
+                self.speak(f"Executing command {command}")
+
             else: 
-                # self.speak(f"I don't know the command {command}.")
-                self.play_tone(220)
+                self.speak(f"I don't know the command {command}.")
+                # self.play_tone(220)
         else: 
-            # self.speak(f"I don't know the command {command}.")
-            self.play_tone(220)
+            self.speak(f"I don't know the command {command}.")
+            # self.play_tone(220)
         
+
         self.prev_command = text
+        return twist
 
     def command_cb(self, msg):
         self.commands.append(msg.data)

@@ -38,7 +38,7 @@ class Listen():
 
         with sr.Microphone(device_index=self.device_index) as source:
             rospy.loginfo(f"{self.node_name} listening...")
-            audio = self.r.listen(source, timeout=5, phrase_time_limit=5)
+            audio = self.r.listen(source, timeout=10, phrase_time_limit=5)
 
         try:
             result = self.r.recognize_google(audio)
