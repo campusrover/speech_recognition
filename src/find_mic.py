@@ -1,8 +1,18 @@
 import speech_recognition as sr 
+from ctypes import *
+import pyaudio
 
 
-# for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
-#     print(i,": ",microphone_name)
+ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
+def py_error_handler(filename, line, function, err, fmt):
+    # print('messages are yummy')
+    pass
+c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
+asound = cdll.LoadLibrary('libasound.so')
+asound.snd_lib_error_set_handler(c_error_handler)
+
+for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
+    print(i,": ",microphone_name)
 
 r = sr.Recognizer()
 
