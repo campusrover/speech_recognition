@@ -11,6 +11,7 @@ import rostopic
 import pysine
 from ctypes import *
 import playsound
+import roslibpy
 
 exit = False
 
@@ -22,7 +23,7 @@ class Execute():
         self.node_name = "[EXECUTE]"
         self.cmd_vel = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
         self.command_sub = rospy.Subscriber("/whisper/command", String, self.command_cb)
-        self.commands = []
+        self.command = ""
 
         with open(f'{self.package_directory}/commands_3.json') as file:
             self.parsed_json = json.load(file)
@@ -44,16 +45,23 @@ class Execute():
             self.speak("Exiting program now.")
         elif command[0] in self.parsed_json:
             if command[1] in self.parsed_json[command[0]] or command[0] == "stop":
-                twist.linear.x = self.parsed_json[command[0]][command[1]]["linear.x"]
-                twist.linear.y = self.parsed_json[command[0]][command[1]]["linear.y"]
-                twist.linear.z = self.parsed_json[command[0]][command[1]]["linear.z"]
-                twist.angular.x = self.parsed_json[command[0]][command[1]]["angular.x"]
-                twist.angular.y = self.parsed_json[command[0]][command[1]]["angular.y"]
-                twist.angular.z = self.parsed_json[command[0]][command[1]]["angular.z"]
-
-                # self.cmd_vel.publish(twist)
+                current_command = self.parsed_json[command[0]][command[1]]
                 
-                # self.play_tone(440)
+                client = roslibpy.Ros(host='localhost', port=9090)
+                client.run()
+
+                pub = roslibpy.Topic(client, current_command["receiver"], current_command["type"])
+
+                # while client.is_connected:
+                print("connected and should publish message now")
+                pub.publish(roslibpy.Message(current_command["msg"]))
+                    # print("sleep")
+                    # rospy.sleep(1)
+                
+                print("done publishing message now")
+                pub.unadvertise()
+                client.terminate()
+               
                 self.speak(f"Executing command {command}")
 
             else: 
@@ -66,7 +74,8 @@ class Execute():
         return twist
 
     def command_cb(self, msg):
-        self.commands.append(msg.data)
+        rospy.loginfo(f" CALLBACK: {self.node_name} received command <{msg.data}>")
+        self.command = msg.data
 
     def play_tone(self, freq, duration=1.0):
         pysine.sine(frequency=freq, duration=duration)  
@@ -99,11 +108,11 @@ twist = Twist()
 rate = rospy.Rate(10)
 
 while not rospy.is_shutdown():
-    if executer.commands:
-        twist = executer.execute_command(executer.commands.pop())
-    executer.cmd_vel.publish(twist)
+    if executer.command:
+        print("commands: ", executer.command)
+        executer.execute_command(executer.command)
 
     if exit:
         break
 
-    rate.sleep()
+    # rate.sleep()

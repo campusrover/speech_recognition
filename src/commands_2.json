@@ -1,0 +1,27 @@
+{
+    "go":{
+        "back" : "Twist(Vector3(-0.1,0,0), Vector3(0,0,0)", 
+        "forward" : "Twist(Vector3(0.1,0,0), Vector3(0,0,0)",
+        "message_type": "geometry_msgs/Twist",
+        "topic": "/cmd_vel"
+    },
+    "turn": {
+        "left" : "Twist(Vector3(0,0,0), Vector3(0,0,0.1)",
+        "right" : "Twist(Vector3(0,0,0), Vector3(0,0,-0.1)",
+        "message_type": "geometry_msgs/Twist",
+        "topic": "/cmd_vel"
+    },
+    "gripper": {
+        "open": true,
+        "close": false,
+        "topic": "/gripper",
+        "message_type": "std_msgs/Boolean"
+    },
+    "stop": {
+        "moving": "Twist(Vector3(0,0,0), Vector3(0,0,0.1)",
+        "angular.z": 0, 
+        "topic": "/cmd_vel",
+        "message_type": "geometry_msgs/Twist"
+    }
+    
+}
