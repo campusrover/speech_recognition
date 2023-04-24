@@ -1,3 +1,11 @@
+'''
+
+This script is used to find the index of the microphone that can be used and test to see if it can be used or produce an error.
+To use the script, run the following command in the terminal: python3 find_mic.py <device_index>
+
+'''
+
+
 import speech_recognition as sr 
 from ctypes import *
 import sys

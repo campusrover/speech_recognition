@@ -1,82 +1,104 @@
 {
-    "drive": 
-    {
-        "forward": 
-        {
-            "linear.x": 0.1,
-            "angular.z": 0
+    "go": {
+        "forward": { 
+            "receiver": "/cmd_vel",
+            "type": "geometry_msgs/Twist",
+            "msg" : {
+                "linear": {
+                    "x": 0.2,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "angular": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
         },
-        "straight":
-        {
-            "linear.x": 0.1,
-            "angular.z": 0
-        }, 
-        "back":
-        {
-            "linear.x": -0.1,
-            "angular.z": 0
-        }, 
-        "topic": "/cmd_vel",
-        "message_type": "geometry_msgs/Twist"
-
-    },  
-    "go": 
-    {
-        "forward": 
-        {
-            "linear.x": 0.1,
-            "angular.z": 0
+        "back": { 
+            "receiver": "/cmd_vel",
+            "type": "geometry_msgs/Twist",
+            "msg" : {
+                "linear": {
+                    "x": -0.2,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "angular": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        }
     },
-        "straight":
-        {
-            "linear.x": 0.1,
-            "angular.z": 0
-    }, 
-        "back":
-        {
-            "linear.x": -0.1,
-            "angular.z": 0
+    "turn": {
+        "left": { 
+            "receiver": "/cmd_vel",
+            "type": "geometry_msgs/Twist",
+            "msg" : {
+                "linear": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "angular": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.1
+                }
+            }
         }, 
-        "topic": "/cmd_vel", 
-        "message_type": "geometry_msgs/Twist"
+        "right": { 
+            "receiver": "/cmd_vel",
+            "type": "geometry_msgs/Twist",
+            "msg" : {
+                "linear": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "angular": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.1
+                }
+            }
+        }
     }, 
-    "turn":
-    {
-        "left":
-        {
-            "linear.x": 0,
-            "angular.z": -0.1
-        },
-        "right":
-        {
-            "linear.x": 0,
-            "angular.z": 0.1
-        }, 
-        "topic": "/cmd_vel", 
-        "message_type": "geometry_msgs/Twist"
-    }, 
-    "open gripper": {
-        "data": true,
-        "topic": "/gripper",
-        "message_type": "std_msgs/Boolean"
-    },
-    "close gripper": {
-        "data": false,
-        "topic": "/gripper",
-        "message_type": "std_msgs/Boolean"
-    },
     "stop": {
-        "linear.x": 0,
-        "angular.z": 0, 
-        "topic": "/cmd_vel",
-        "message_type": "geometry_msgs/Twist"
-    },
-    
-    "exit program": "exit program"
-
+        "moving": { 
+            "receiver": "/cmd_vel",
+            "type": "geometry_msgs/Twist",
+            "msg" : {
+                "linear": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "angular": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        }
+    }, 
+    "gripper": {
+        "open": {
+            "receiver": "/gripper",
+            "type": "std_msgs/Bool",
+            "msg" : {
+                "data": true
+            }
+        },
+        "close": {
+            "receiver": "/gripper",
+            "type": "std_msgs/Bool",
+            "msg" : {
+                "data": false
+            }
+        }
+    }
 }
-
-
-
-  
-  

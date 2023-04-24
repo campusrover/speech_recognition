@@ -1,0 +1,16 @@
+<launch>
+    <!-- the device_index is the index for the sound device that you want to use as your microphone -->
+    <arg name="device_index" default="0"/>
+
+    <!-- start the listen node with the device_index gotten from the command line or default, 0 -->
+    <node pkg="whisper_4" type="listen.py" name="listen" output="screen">
+        <param name="device_index" value="$(arg device_index)" />
+    </node>
+
+    <!-- start the execute node -->
+    <node pkg="whisper_4" type="execute_2.py" name="execute" output="screen" />
+
+    <!-- initialzie the rosbridge server that dynamic messages can be sent -->
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
+
+</launch>
