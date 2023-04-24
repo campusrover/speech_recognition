@@ -54,9 +54,18 @@ misc:
 
 ## **Run**
 
-To run this project, you can choose to run the files separately using `rosrun` and  `roslaunch rosbridge_server rosbridge_websocket.launch` in separate terminals
+To run this project in one terminal: 
 
-or run `roslaunch whisper_4 command.launch` to have them all in one terminal. 
+`roslaunch whisper_4 command.launch`
+
+Or to run the files in separate terminals:
+
+`rosrun whisper_4 execute.py`
+
+`rosrun whisper_4 listen.py`
+
+`roslaunch rosbridge_server rosbridge_websocket.launch`
+
 
 
 ## **Known Errors**
