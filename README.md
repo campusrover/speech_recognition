@@ -6,7 +6,7 @@ This project aims to utilize Python's speech recognition library to listen to us
 
 ## **Installation**
 
-This package depends on a few external packages. To install them, first git clone this package into your catkin_ws and then run: 
+These instructions assume that you have **ROS NOETIC** installed. This has not been tested on any other distro. To install them, first git clone this package into your catkin_ws and then run: 
 
 `pip install -r requirements.txt`
 
