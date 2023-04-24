@@ -71,4 +71,4 @@ Or to run the files in separate terminals:
 ## **Known Errors**
 
 - `malloc(): mismatching next->prev_size (unsorted)` 
-    - This error can occur when you select a device index for your microphone that is recognized as a microphone, but is not functioning properly. If you attempt to record sound using this microphone, you will encounter this error. I'm not sure how to catch this error because it occurs after the microphone is already connected. 
+    - This error can occur when you select a device index for your microphone that is recognized as a microphone, but is not functioning properly. If you attempt to record sound using this microphone, you will encounter this error. I'm not sure how to catch this because it occurs after the microphone is already connected and has something to do with memory allocation. 
