@@ -8,6 +8,8 @@ This project aims to utilize Python's speech recognition library to listen to us
 
 These instructions assume that you have **ROS NOETIC** installed. This has not been tested on any other distro. To install them, first git clone this package into your catkin_ws and then run: 
 
+`git clone https://github.com/vbelkina/whisper_4.git`
+
 `pip install -r requirements.txt`
 
 `sudo apt install ros-noetic-rosbridge-server`
