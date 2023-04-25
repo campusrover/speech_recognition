@@ -130,6 +130,7 @@ class Execute():
         
         # Playing the converted file
         playsound.playsound("speak.mp3")
+        rospy.sleep(0.2)
 
 rospy.init_node("execute")
 
