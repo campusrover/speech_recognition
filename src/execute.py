@@ -137,7 +137,7 @@ rate = rospy.Rate(1)
 
 while not rospy.is_shutdown():
     # if a command was given, execute it
-    if executer.command:
+    if executer.command != executer.prev_command:
         executer.execute_command(executer.command)
 
     # if the exit command was given, exit the program
