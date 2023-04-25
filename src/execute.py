@@ -59,7 +59,6 @@ class Execute():
         # initialize command variables
         self.command = ""
         self.prev_command = ""
-        self.new_command = False
 
         # load commands from json file
         with open(f'{self.package_directory}/commands.json') as file:
@@ -94,15 +93,14 @@ class Execute():
                 
                 # publish the command to the appropriate topic over the roslibpy client
                 pub = roslibpy.Topic(self.client, current_command["receiver"], current_command["type"])
+
                 pub.publish(roslibpy.Message(current_command["msg"]))
 
-                # pub.unadvertise()
+                pub.unadvertise()
 
                 if self.prev_command != self.command: 
                     rospy.loginfo(f"{self.node_name} Publishing {command} to {current_command['receiver']} topic with type {current_command['type']}.")
                     self.speak(f"Executing command {command}")
-                
-                self.new_command = False
                 
             else: 
                 self.speak(f"I don't know the command {command}.")
@@ -115,10 +113,7 @@ class Execute():
     # callback for the command subscriber
     def command_cb(self, msg):
         rospy.loginfo(f" CALLBACK: {self.node_name} received command <{msg.data}>. Previous command was <{self.prev_command}>")
-        self.new_command = True
         self.command = msg.data
-
-        self.execute_command(self.command)
 
     # play a tone
     def play_tone(self, freq, duration=1.0):
@@ -145,8 +140,8 @@ rate = rospy.Rate(1)
 
 while not rospy.is_shutdown():
     # if a command was given, execute it
-    # if executer.command and executer.new_command:
-    #     executer.execute_command(executer.command)
+    if executer.command:
+        executer.execute_command(executer.command)
 
     # if the exit command was given, exit the program
     if exit:
