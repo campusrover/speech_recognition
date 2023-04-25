@@ -8,7 +8,7 @@
     </node>
 
     <!-- start the execute node -->
-    <node pkg="whisper_4" type="execute_2.py" name="execute" output="screen" />
+    <node pkg="whisper_4" type="execute.py" name="execute" output="screen" />
 
     <!-- initialzie the rosbridge server that dynamic messages can be sent -->
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
