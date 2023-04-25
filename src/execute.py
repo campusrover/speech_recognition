@@ -118,6 +118,8 @@ class Execute():
         self.new_command = True
         self.command = msg.data
 
+        self.execute_command(self.command)
+
     # play a tone
     def play_tone(self, freq, duration=1.0):
         pysine.sine(frequency=freq, duration=duration)  
@@ -143,8 +145,8 @@ rate = rospy.Rate(1)
 
 while not rospy.is_shutdown():
     # if a command was given, execute it
-    if executer.command and executer.new_command:
-        executer.execute_command(executer.command)
+    # if executer.command and executer.new_command:
+    #     executer.execute_command(executer.command)
 
     # if the exit command was given, exit the program
     if exit:
