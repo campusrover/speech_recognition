@@ -73,7 +73,7 @@ class Execute():
 
     # execute the command
     def execute_command(self, text):
-        rospy.loginfo(f"{self.node_name} received command <{text}>")
+        # rospy.loginfo(f"{self.node_name} received command <{text}>")
         twist = Twist()
         command = self.process_command(text)
 
