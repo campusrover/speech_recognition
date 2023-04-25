@@ -95,8 +95,8 @@ class Execute():
                 pub = roslibpy.Topic(self.client, current_command["receiver"], current_command["type"])
                 pub.publish(roslibpy.Message(current_command["msg"]))
 
-                if self.command != self.prev_command:
-                    pub.unadvertise()
+                # if self.command == self.prev_command:
+                pub.unadvertise()
 
                 if self.prev_command != command: 
                     rospy.loginfo(f"{self.node_name} Publishing {command} to {current_command['receiver']} topic with type {current_command['type']}.")
@@ -107,7 +107,7 @@ class Execute():
             self.speak(f"I don't know the command {command}.")
 
         # update the previous command
-        self.prev_command = command
+        self.prev_command = self.command
 
     # callback for the command subscriber
     def command_cb(self, msg):
@@ -139,7 +139,7 @@ rate = rospy.Rate(1)
 
 while not rospy.is_shutdown():
     # if a command was given, execute it
-    if executer.command:
+    if executer.command != executer.prev_command:
         executer.execute_command(executer.command)
 
     # if the exit command was given, exit the program
