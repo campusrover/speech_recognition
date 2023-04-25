@@ -19,7 +19,7 @@ github: vbelkina
 import rospy 
 import json 
 from geometry_msgs.msg import Twist
-from std_msgs.msg import String, Bool
+from std_msgs.msg import String
 from gtts import gTTS
 import os
 import rostopic
@@ -27,9 +27,9 @@ import pysine
 from ctypes import *
 import playsound
 import roslibpy
-import sys
 
 rospy.sleep(1)
+
 
 # error handler for ASLA sound library so that it doesn't print out warnings to the console
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
@@ -40,6 +40,8 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 # -----------------------------------------------------------------------------------------
 
+exit = False
+
 class Execute():
 
     def __init__(self):
@@ -49,7 +51,6 @@ class Execute():
         
         # subscribe to commands from the listener node (or anything else that publishes to /whisper/command)
         self.command_sub = rospy.Subscriber("/whisper/command", String, self.command_cb)
-        self.exit_pub = rospy.Publisher("/whisper/exit", Bool, queue_size=1)
 
         # initialize roslibpy client
         self.client = roslibpy.Ros(host='localhost', port=9090)
@@ -82,7 +83,8 @@ class Execute():
         
         # if the command is "exit" or "shutdown", exit the program
         if command[0] == "exit" or command[0] == "shutdown":
-            self.exit_pub.publish(True)
+            exit = True
+            self.speak("Exiting program now.")
         
         # check if the command is in the json file
         elif command[0] in self.parsed_json:
@@ -131,19 +133,20 @@ class Execute():
         rospy.sleep(0.2)
 
 rospy.init_node("execute")
+
 executer = Execute()
+twist = Twist()
+
 rate = rospy.Rate(1)
-
-def shutdown_cb(msg):
-    executer.client.terminate()
-    rospy.loginfo(f"{executer.node_name} exiting...")
-    sys.exit(0)
-
-exit_sub = rospy.Subscriber("/whisper/exit", Bool, shutdown_cb)
 
 while not rospy.is_shutdown():
     # if a command was given, execute it
     if executer.command:
         executer.execute_command(executer.command)
+
+    # if the exit command was given, exit the program
+    if exit:
+        executer.client.terminate()
+        break
 
     rate.sleep()
