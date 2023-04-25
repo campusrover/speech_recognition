@@ -96,7 +96,7 @@ class Execute():
 
                 pub.publish(roslibpy.Message(current_command["msg"]))
 
-                pub.unadvertise()
+                # pub.unadvertise()
 
                 if self.prev_command != self.command: 
                     rospy.loginfo(f"{self.node_name} Publishing {command} to {current_command['receiver']} topic with type {current_command['type']}.")
