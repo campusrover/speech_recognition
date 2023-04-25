@@ -94,7 +94,9 @@ class Execute():
                 # publish the command to the appropriate topic over the roslibpy client
                 pub = roslibpy.Topic(self.client, current_command["receiver"], current_command["type"])
                 pub.publish(roslibpy.Message(current_command["msg"]))
-                pub.unadvertise()
+
+                if self.command != self.prev_command:
+                    pub.unadvertise()
 
                 if self.prev_command != command: 
                     rospy.loginfo(f"{self.node_name} Publishing {command} to {current_command['receiver']} topic with type {current_command['type']}.")
@@ -137,7 +139,7 @@ rate = rospy.Rate(1)
 
 while not rospy.is_shutdown():
     # if a command was given, execute it
-    if executer.command != executer.prev_command:
+    if executer.command:
         executer.execute_command(executer.command)
 
     # if the exit command was given, exit the program
