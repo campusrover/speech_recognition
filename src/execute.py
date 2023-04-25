@@ -102,6 +102,8 @@ class Execute():
                     rospy.loginfo(f"{self.node_name} Publishing {command} to {current_command['receiver']} topic with type {current_command['type']}.")
                     self.speak(f"Executing command {command}")
                 
+                self.new_command = False
+                
             else: 
                 self.speak(f"I don't know the command {command}.")
         else: 
@@ -141,7 +143,7 @@ rate = rospy.Rate(1)
 
 while not rospy.is_shutdown():
     # if a command was given, execute it
-    if executer.command:
+    if executer.command and executer.new_command:
         executer.execute_command(executer.command)
 
     # if the exit command was given, exit the program
