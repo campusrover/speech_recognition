@@ -18,6 +18,8 @@ import sys
 import signal
 from ctypes import *
 
+exit = False
+
 class Listen():
 
     def __init__(self):
@@ -80,8 +82,11 @@ class Listen():
             
             rospy.loginfo(f"{self.node_name} RESULT: {result}")
 
+            if "exit" in result:
+                exit = True
+
             # publish the result to the topic whisper/command
-            if result: 
+            elif result: 
                 self.command_pub.publish(result)
 
         except sr.UnknownValueError: 
@@ -99,12 +104,6 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 # --------------------------------------------------
 
-# handle the ctrl+c signal
-def shutdown(sig):
-    rospy.loginfo("[LISTEN] Exiting program...")
-    sys.exit(0)
-
-
 rospy.init_node("listener")
 listener = Listen()
 
@@ -113,4 +112,7 @@ listener.calibrate_mic()
 
 while not rospy.is_shutdown():
     listener.listen()
-    signal.signal(signal.SIGINT, shutdown)
+    
+    if exit: 
+        rospy.loginfo(f"{listener.node_name} Exiting...")
+        break
