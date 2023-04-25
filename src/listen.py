@@ -13,10 +13,12 @@ import rospy
 import speech_recognition as sr 
 import os
 from gtts import gTTS
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 import sys
 import signal
 from ctypes import *
+
+rospy.sleep(1)
 
 class Listen():
 
@@ -100,12 +102,13 @@ asound.snd_lib_error_set_handler(c_error_handler)
 # --------------------------------------------------
 
 # handle the ctrl+c signal
-def shutdown(sig):
+def shutdown_cb(msg):
     rospy.loginfo("[LISTEN] Exiting program...")
     sys.exit(0)
 
 
 rospy.init_node("listener")
+exit_sub = rospy.Subscriber("/whisper/exit", Bool, shutdown_cb)
 listener = Listen()
 
 # calibrate the microphone
@@ -113,4 +116,3 @@ listener.calibrate_mic()
 
 while not rospy.is_shutdown():
     listener.listen()
-    signal.signal(signal.SIGINT, shutdown)
