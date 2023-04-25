@@ -32,7 +32,7 @@ class Listen():
         self.device_index = rospy.get_param("~device_index", 0)
         self.command_pub = rospy.Publisher("/whisper/command", String, queue_size=1)
 
-        rospy.loginfo(f"{self.node_name} Initialized with device_index = ", self.device_index)
+        rospy.loginfo(f"{self.node_name} Initialized with device_index = {self.device_index}")
     
     # calibrate the mic with some ambient noise
     def calibrate_mic(self):
