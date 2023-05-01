@@ -99,11 +99,10 @@ class Execute():
                     self.speak(f"Executing command {command}")
 
                 # self.prev_command = self.command
-                
-                while self.prev_command == self.command:
-                    pub.publish(roslibpy.Message(current_command["msg"]))
+            
+                pub.publish(roslibpy.Message(current_command["msg"]))
 
-                pub.unadvertise()
+                # pub.unadvertise()
                 
             else: 
                 self.speak(f"I don't know the command {command}.")
