@@ -100,13 +100,7 @@ class Execute():
                     rospy.loginfo(f"{self.node_name} Publishing {command} to {current_command['receiver']} topic with type {current_command['type']}.")
                     self.speak(f"Executing command {command}")
 
-                start_time = rospy.Time.now().to_sec()
-
-                while self.prev_command == self.command or start_time + 5 > rospy.Time.now().to_sec():
-                    print("prev command = ", self.prev_command, " current command = ", self.command)
-                    pub.publish(roslibpy.Message(current_command["msg"]))
-
-                self.command = ""
+                pub.publish(roslibpy.Message(current_command["msg"]))
 
                 pub.unadvertise()
                 
