@@ -105,9 +105,11 @@ class Execute():
                 pub.unadvertise()
                 
             else: 
+                if self.prev_command != self.command: 
+                    self.speak(f"I don't know the command {command}.")
+        else:
+            if self.prev_command != self.command: 
                 self.speak(f"I don't know the command {command}.")
-        else: 
-            self.speak(f"I don't know the command {command}.")
 
         # update the previous command
         self.prev_command = self.command
