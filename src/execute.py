@@ -98,7 +98,7 @@ class Execute():
                     rospy.loginfo(f"{self.node_name} Publishing {command} to {current_command['receiver']} topic with type {current_command['type']}.")
                     self.speak(f"Executing command {command}")
 
-                self.prev_command = self.command
+                # self.prev_command = self.command
                 
                 while self.prev_command == self.command:
                     pub.publish(roslibpy.Message(current_command["msg"]))
