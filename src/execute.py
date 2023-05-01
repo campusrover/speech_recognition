@@ -101,7 +101,7 @@ class Execute():
 
                 # self.prev_command = self.command
                 while self.prev_command == self.command:
-                    print("self.prev_command = ", self.prev_command, " self.command = " self.command)
+                    print("self.prev_command = ", self.prev_command, " self.command = ", self.command)
                     pub.publish(roslibpy.Message(current_command["msg"]))
 
 
