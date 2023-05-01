@@ -100,9 +100,9 @@ class Execute():
                     self.speak(f"Executing command {command}")
 
                 # self.prev_command = self.command
-
-                pub.advertise()
-                pub.publish(roslibpy.Message(current_command["msg"]))
+                while self.prev_command == self.command:
+                    print("self.prev_command = ", self.prev_command, " self.command = " self.command)
+                    pub.publish(roslibpy.Message(current_command["msg"]))
 
 
                 # pub.unadvertise()
