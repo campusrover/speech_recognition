@@ -106,6 +106,8 @@ class Execute():
                     print("prev command = ", self.prev_command, " current command = ", self.command)
                     pub.publish(roslibpy.Message(current_command["msg"]))
 
+                self.command = ""
+
                 pub.unadvertise()
                 
             else: 
