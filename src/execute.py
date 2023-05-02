@@ -100,7 +100,7 @@ class Execute():
                     self.speak(f"Executing command {command}")
 
                 for i in range (0, 1000):
-                    print(i, delimiter=", ")
+                    print(i, end=", ")
                     pub.publish(roslibpy.Message(current_command["msg"]))
 
                     if self.prev_command != self.command: 
