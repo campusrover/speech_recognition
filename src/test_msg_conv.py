@@ -28,10 +28,10 @@ client.run()
 
 while not rospy.is_shutdown():
 
-    pub = roslibpy.Topic(client, parsed_json["go"]["back"]["receiver"], parsed_json["go"]["back"]["type"])
+    pub = roslibpy.Topic(client, parsed_json["turn"]["left"]["receiver"], parsed_json["turn"]["left"]["type"])
 
     while client.is_connected:
-        pub.publish(roslibpy.Message(parsed_json["go"]["back"]["msg"]))
+        pub.publish(roslibpy.Message(parsed_json["turn"]["left"]["msg"]))
         rospy.sleep(1)
     
     pub.unadvertise()
