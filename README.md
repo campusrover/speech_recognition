@@ -52,15 +52,21 @@ These instructions assume that you have **ROS NOETIC** installed. This has not b
 
 ## **Run**
 
-To run this project in one terminal: , actionlib, TF, and other essential ROS functionality...
+To run this project in one terminal: 
 
-    roslaunch whisper_4 command.launch
+    roslaunch whisper_4 command.launch device_index:=0 
 
 Or to run the files in separate terminals:
 
     roslaunch rosbridge_server rosbridge_websocket.launch
     rosrun whisper_4 execute.py
     rosrun whisper_4 listen.py
+
+## **Connecting to a microphone**
+
+Any microphone should work, even the built in microphone on your laptop. If you are running it on a linux machine, then it shouldn't be a problem as you can access the device indexes and see what they are using the find_mic.py file which should list all available microphone devices. 
+I have not tested what happens on a Mac or Windows, so I am not sure what happens. However, my guess is that if you leave the device index to be 0, then it should choose the default microphone and speaker. 
+
 
 ## **Known Errors**
 
