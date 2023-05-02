@@ -99,13 +99,7 @@ class Execute():
                     rospy.loginfo(f"{self.node_name} Publishing {command} to {current_command['receiver']} topic with type {current_command['type']}.")
                     self.speak(f"Executing command {command}")
 
-                self.prev_command = self.command
-
-                while self.client.is_connected:
-                    pub.publish(roslibpy.Message(current_command["msg"]))
-
-                    if self.prev_command != self.command: 
-                        break
+                pub.publish(roslibpy.Message(current_command["msg"]))
 
                 pub.unadvertise()
                 
