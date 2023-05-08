@@ -1,4 +1,4 @@
-# **whisper_4**
+# **Speech Recognition for sending ROS Commands**
 
 ## **Description**
 
