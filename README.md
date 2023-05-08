@@ -1,4 +1,4 @@
-# **Speech Recognition for sending ROS Commands**
+# **Speech Recognition for sending commands through ROS Topics**
 
 ## **Description**
 
